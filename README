@@ -1,0 +1,6 @@
+This repo contains a simple Android app that builds upon the Spring MVC application in the RegistraionDemo demo.  Like the Spring application, the Android app is for demonstration purposes only.
+
+I've included the project metadata (all of the .* directories and files) from the Android Development Toolkit. 
+
+I've also attached a software license in case anyone finds something they want to reuse.  The license is there for the warranty/liability clause more than anything else; I'm not particularly concerned about someone stealing the intellectual property.
+

@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="crashburn.reg.DisplaySchoolsActivity"
+            android:label="@string/title_activity_display_schools"
+            android:parentActivityName="crashburn.reg.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="crashburn.reg.MainActivity" />
+        </activity>
+        <activity
+            android:name="crashburn.reg.DisplayStudentsActivity"
+            android:label="@string/title_activity_display_students"
+            android:parentActivityName="crashburn.reg.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="crashburn.reg.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

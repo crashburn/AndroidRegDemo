@@ -6,9 +6,14 @@
     <string name="button_schools">Schools</string>
     <string name="button_students">Students</string>
     <string name="welcome">This is a demonstration app. Choose Schools or Students to get started.</string>
-    <string name="title_activity_display_schools">DisplaySchoolsActivity</string>
+    <string name="title_activity_display_schools">Schools</string>
     <string name="schools">Schools</string>
-    <string name="title_activity_display_students">DisplayStudentsActivity</string>
+    <string name="schools_table_name">Name</string>
+    <string name="schools_table_city">City</string>
+    <string name="schools_table_state">State</string>
+    <string name="schools_table_zip">Zip</string>
+    <string name="title_activity_display_students">Students</string>
     <string name="students">Students</string>
+    
 
 </resources>

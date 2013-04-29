@@ -1,12 +1,25 @@
 package crashburn.reg;
 
-import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class DisplaySchoolsActivity extends Activity {
 
@@ -16,6 +29,7 @@ public class DisplaySchoolsActivity extends Activity {
 		setContentView(R.layout.activity_display_schools);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		new MyGetter("http://reg-crashburn.cloudfoundry.com/schools.json").execute();
 	}
 
 	/**
@@ -51,5 +65,64 @@ public class DisplaySchoolsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+	private class MyGetter extends RestfulGetter {
+		MyGetter(String uri) {
+			super(uri);
+		}
+        @Override
+        protected void onPostExecute(String result) {
+        	
+        	List<School> schools = getSchoolListFromJsonString(result);
+        	if(schools.size() > 0) {
+	            TableLayout table = (TableLayout) findViewById(R.id.schools_table);
+	            
+	            for(School school : schools) {
+		            TableRow row = createRow(table.getContext(), school);
+		            table.addView(row);
+	            }
+        	}
+        }
+        private TableRow createRow(Context context, School school) {
+        	TableRow row = new TableRow(context);
+            row.addView(getCell(context, school.getName()));
+            row.addView(getCell(context, school.getAddress().getCity()));
+            row.addView(getCell(context, school.getAddress().getState()));
+            row.addView(getCell(context, school.getAddress().getZip()));
+        	return row;
+        }
+        private View getCell(Context context, String text) {
+            TextView txt = new TextView(context);
+            txt.setText(text);
+            return txt;
+        }
+        private List<School> getSchoolListFromJsonString(String string) {
+        	List<School> schools = new ArrayList<School>();
+        	try {
+	        	JSONObject obj = (JSONObject) new JSONTokener(string).nextValue();
+	        	JSONArray schoolArray = obj.getJSONArray("schools");
+	        	for(int i=0, len=schoolArray.length(); i < len; i++) {
+	        		schools.add(getSchoolFromJSON(schoolArray.getJSONObject(i)));
+	        	}
+        	}
+        	catch(JSONException jsone) {
+        		jsone.printStackTrace();
+        	}
+        	return schools;
+        }
+        private School getSchoolFromJSON(JSONObject jsonSchool) throws JSONException {
+    		School school = new School();
+    		school.setName(jsonSchool.getString("name"));
+    		school.setAddress(getAddressfromJSON(jsonSchool.getJSONObject("address")));
+    		return school;
+        }
+        private Address getAddressfromJSON(JSONObject jsonAddress) throws JSONException {
+        	Address address = new Address();
+        	address.setStreet(jsonAddress.getString("street"));
+        	address.setCity(jsonAddress.getString("city"));
+        	address.setState(jsonAddress.getString("state"));
+        	address.setZip(jsonAddress.getString("zip"));
+        	return address;
+        }
+	}
 }

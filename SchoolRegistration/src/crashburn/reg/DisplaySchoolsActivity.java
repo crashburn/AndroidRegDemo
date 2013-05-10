@@ -11,17 +11,21 @@ import org.json.JSONTokener;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 public class DisplaySchoolsActivity extends Activity {
+	
+	public final static String EXTRA_SCHOOL_ID = "crashburn.reg.school.id";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +87,21 @@ public class DisplaySchoolsActivity extends Activity {
 	            }
         	}
         }
-        private TableRow createRow(Context context, School school) {
+        private TableRow createRow(final Context context, final School school) {
         	TableRow row = new TableRow(context);
             row.addView(getCell(context, school.getName()));
             row.addView(getCell(context, school.getAddress().getCity()));
             row.addView(getCell(context, school.getAddress().getState()));
             row.addView(getCell(context, school.getAddress().getZip()));
+            row.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+			    	Intent intent = new Intent(context, DisplaySchoolActivity.class);
+			    	intent.putExtra(EXTRA_SCHOOL_ID, school.getId());
+			    	startActivity(intent);
+				}
+			});
         	return row;
         }
         private View getCell(Context context, String text) {
@@ -112,6 +125,7 @@ public class DisplaySchoolsActivity extends Activity {
         }
         private School getSchoolFromJSON(JSONObject jsonSchool) throws JSONException {
     		School school = new School();
+    		school.setId(jsonSchool.getString("id"));
     		school.setName(jsonSchool.getString("name"));
     		school.setAddress(getAddressfromJSON(jsonSchool.getJSONObject("address")));
     		return school;

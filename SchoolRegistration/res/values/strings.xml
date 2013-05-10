@@ -14,6 +14,16 @@
     <string name="schools_table_zip">Zip</string>
     <string name="title_activity_display_students">Students</string>
     <string name="students">Students</string>
-    
-
+    <string name="title_activity_display_school">DisplaySchoolActivity</string>
+    <string name="school_details_name">Name: </string>
+    <string name="school_details_street">Street: </string>
+    <string name="school_details_citystatezip">City, State, Zip: </string>
+    <string name="school_details_gradelevels">Grade Levels: </string>
+    <string name="school_details_students">Enrolled Students</string>
+    <string name="students_table_lastname">Last Name</string>
+    <string name="students_table_firstname">First Name</string>
+    <string name="students_table_sex">Sex</string>
+    <string name="students_table_age">Age</string>
+    <string name="students_table_gradelevel">Grade Level</string>
+        
 </resources>
